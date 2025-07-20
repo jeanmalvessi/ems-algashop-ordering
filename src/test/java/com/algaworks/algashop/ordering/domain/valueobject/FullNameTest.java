@@ -7,8 +7,8 @@ class FullNameTest {
 
     @Test
     void shouldCreateValidFullName() {
-        String firstName = "João";
-        String lastName = "Silva";
+        String firstName = "Jean";
+        String lastName = "Malvessi";
         FullName fullName = new FullName(firstName, lastName);
 
         assertNotNull(fullName);
@@ -18,21 +18,21 @@ class FullNameTest {
 
     @Test
     void shouldThrowExceptionForNullNames() {
-        assertThrows(NullPointerException.class, () -> new FullName(null, "Silva"));
-        assertThrows(NullPointerException.class, () -> new FullName("João", null));
+        assertThrows(NullPointerException.class, () -> new FullName(null, "Malvessi"));
+        assertThrows(NullPointerException.class, () -> new FullName("Jean", null));
     }
 
     @Test
     void shouldThrowExceptionForBlankNames() {
-        assertThrows(IllegalArgumentException.class, () -> new FullName("", "Silva"));
-        assertThrows(IllegalArgumentException.class, () -> new FullName("João", ""));
-        assertThrows(IllegalArgumentException.class, () -> new FullName("   ", "Silva"));
-        assertThrows(IllegalArgumentException.class, () -> new FullName("João", "   "));
+        assertThrows(IllegalArgumentException.class, () -> new FullName("", "Malvessi"));
+        assertThrows(IllegalArgumentException.class, () -> new FullName("Jean", ""));
+        assertThrows(IllegalArgumentException.class, () -> new FullName("   ", "Malvessi"));
+        assertThrows(IllegalArgumentException.class, () -> new FullName("Jean", "   "));
     }
 
     @Test
     void shouldReturnCorrectStringRepresentation() {
-        FullName fullName = new FullName("João", "Silva");
-        assertEquals("João Silva", fullName.toString());
+        FullName fullName = new FullName("Jean", "Malvessi");
+        assertEquals("Jean Malvessi", fullName.toString());
     }
 }

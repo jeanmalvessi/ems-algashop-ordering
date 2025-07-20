@@ -7,7 +7,7 @@ class EmailTest {
 
     @Test
     void shouldCreateValidEmail() {
-        String address = "user@example.com";
+        String address = "user@domain.com";
         Email email = new Email(address);
 
         assertNotNull(email);
@@ -28,14 +28,14 @@ class EmailTest {
     @Test
     void shouldThrowExceptionForInvalidEmailFormats() {
         String[] invalidEmails = {
-            "userexample.com",
-            "@example.com",
+            "userdomain.com",
+            "@domain.com",
             "user@",
             "user@.com",
-            "user@example.",
-            "user.@example.com",
-            "us..er@example.com",
-            "user@exam ple.com"
+            "user@domain.",
+            "user.@domain.com",
+            "us..er@domain.com",
+            "user@dom ain.com"
         };
 
         for (String invalidEmail : invalidEmails) {
@@ -48,12 +48,12 @@ class EmailTest {
     @Test
     void shouldAcceptValidEmailFormats() {
         String[] validEmails = {
-            "user@example.com",
-            "user.name@example.com",
-            "user+tag@example.com",
-            "user@subdomain.example.com",
-            "123@example.com",
-            "user@example.co.uk"
+            "user@domain.com",
+            "user.name@domain.com",
+            "user+tag@domain.com",
+            "user@subdomain.domain.com",
+            "123@domain.com",
+            "user@domain.co.uk"
         };
 
         for (String validEmail : validEmails) {
@@ -63,7 +63,7 @@ class EmailTest {
 
     @Test
     void shouldReturnCorrectStringRepresentation() {
-        String address = "user@example.com";
+        String address = "user@domain.com";
         Email email = new Email(address);
 
         assertEquals(address, email.toString());

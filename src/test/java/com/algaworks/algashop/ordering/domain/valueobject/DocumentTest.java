@@ -7,7 +7,7 @@ class DocumentTest {
 
     @Test
     void shouldCreateValidDocument() {
-        String number = "12345678900";
+        String number = "255-08-0578";
         Document document = new Document(number);
 
         assertNotNull(document);
@@ -27,7 +27,7 @@ class DocumentTest {
 
     @Test
     void shouldReturnCorrectStringRepresentation() {
-        String number = "12345678900";
+        String number = "255-08-0578";
         Document document = new Document(number);
 
         assertEquals(number, document.toString());

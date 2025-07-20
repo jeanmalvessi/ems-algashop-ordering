@@ -1,5 +1,6 @@
 package com.algaworks.algashop.ordering.domain.valueobject;
 
+import com.algaworks.algashop.ordering.domain.utility.IdGenerator;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
@@ -9,7 +10,7 @@ class CustomerIdTest {
 
     @Test
     void shouldCreateValidCustomerId() {
-        UUID id = UUID.randomUUID();
+        UUID id = IdGenerator.generateTimeBasedUUID();
         CustomerId customerId = new CustomerId(id);
 
         assertNotNull(customerId);
@@ -28,7 +29,7 @@ class CustomerIdTest {
 
     @Test
     void shouldReturnCorrectStringRepresentation() {
-        UUID id = UUID.randomUUID();
+        UUID id = IdGenerator.generateTimeBasedUUID();
         CustomerId customerId = new CustomerId(id);
 
         assertEquals(id.toString(), customerId.toString());
