@@ -28,8 +28,8 @@ class PhoneTest {
     @Test
     void shouldAcceptValidFormats() {
         String[] validNumbers = {
-            "11999887766", // celular
-            "1155887766"   // fixo
+            "11999887766",
+            "1155887766"
         };
 
         for (String validNumber : validNumbers) {
