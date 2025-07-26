@@ -21,7 +21,16 @@ class CustomerTest {
                         new Phone("478-256-2504"),
                         new Document("255-08-0578"),
                         false,
-                        OffsetDateTime.now()
+                        OffsetDateTime.now(),
+                        Address.builder()
+                                .street("Main St")
+                                .number("123")
+                                .neighborhood("Downtown")
+                                .city("Springfield")
+                                .state("IL")
+                                .zipCode(new ZipCode("62701"))
+                                .complement("Apt 1")
+                                .build()
                 ));
     }
 
@@ -35,7 +44,16 @@ class CustomerTest {
                 new Phone("478-256-2504"),
                 new Document("255-08-0578"),
                 false,
-                OffsetDateTime.now()
+                OffsetDateTime.now(),
+                Address.builder()
+                        .street("Main St")
+                        .number("123")
+                        .neighborhood("Downtown")
+                        .city("Springfield")
+                        .state("IL")
+                        .zipCode(new ZipCode("62701"))
+                        .complement("Apt 1")
+                        .build()
         );
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
@@ -54,7 +72,16 @@ class CustomerTest {
                 new Phone("478-256-2504"),
                 new Document("255-08-0578"),
                 false,
-                OffsetDateTime.now()
+                OffsetDateTime.now(),
+                Address.builder()
+                        .street("Main St")
+                        .number("123")
+                        .neighborhood("Downtown")
+                        .city("Springfield")
+                        .state("IL")
+                        .zipCode(new ZipCode("62701"))
+                        .complement("Apt 1")
+                        .build()
         );
 
         customer.archive();
@@ -65,7 +92,18 @@ class CustomerTest {
             c -> Assertions.assertThat(c.phone()).isEqualTo(new Phone("000-000-0000")),
             c -> Assertions.assertThat(c.document()).isEqualTo(new Document("000-00-0000")),
             c -> Assertions.assertThat(c.birthDate()).isNull(),
-            c -> Assertions.assertThat(c.isPromotionNotificationsAllowed()).isFalse()
+            c -> Assertions.assertThat(c.isPromotionNotificationsAllowed()).isFalse(),
+            c -> Assertions.assertThat(c.address()).isEqualTo(
+                    Address.builder()
+                            .street("Main St")
+                            .number("00000")
+                            .neighborhood("Downtown")
+                            .city("Springfield")
+                            .state("IL")
+                            .zipCode(new ZipCode("62701"))
+                            .complement("Anonymous")
+                            .build()
+            )
         );
     }
 
@@ -82,7 +120,16 @@ class CustomerTest {
                 true,
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
-                new LoyaltyPoints(10)
+                new LoyaltyPoints(10),
+                Address.builder()
+                        .street("Main St")
+                        .number("123")
+                        .neighborhood("Downtown")
+                        .city("Springfield")
+                        .state("IL")
+                        .zipCode(new ZipCode("62701"))
+                        .complement("Apt 1")
+                        .build()
         );
 
         Assertions.assertThatExceptionOfType(CustomerArchivedException.class)
@@ -111,7 +158,16 @@ class CustomerTest {
                 new Phone("478-256-2504"),
                 new Document("255-08-0578"),
                 false,
-                OffsetDateTime.now()
+                OffsetDateTime.now(),
+                Address.builder()
+                        .street("Main St")
+                        .number("123")
+                        .neighborhood("Downtown")
+                        .city("Springfield")
+                        .state("IL")
+                        .zipCode(new ZipCode("62701"))
+                        .complement("Apt 1")
+                        .build()
         );
 
         customer.addLoyaltyPoints(new LoyaltyPoints(10));
@@ -130,7 +186,16 @@ class CustomerTest {
                 new Phone("478-256-2504"),
                 new Document("255-08-0578"),
                 false,
-                OffsetDateTime.now()
+                OffsetDateTime.now(),
+                Address.builder()
+                        .street("Main St")
+                        .number("123")
+                        .neighborhood("Downtown")
+                        .city("Springfield")
+                        .state("IL")
+                        .zipCode(new ZipCode("62701"))
+                        .complement("Apt 1")
+                        .build()
         );
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
