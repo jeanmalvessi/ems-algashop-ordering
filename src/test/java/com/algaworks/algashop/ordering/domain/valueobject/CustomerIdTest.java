@@ -1,6 +1,7 @@
 package com.algaworks.algashop.ordering.domain.valueobject;
 
 import com.algaworks.algashop.ordering.domain.utility.IdGenerator;
+import com.algaworks.algashop.ordering.domain.valueobject.id.CustomerId;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
