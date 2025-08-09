@@ -19,5 +19,8 @@ public class ErrorMessages {
     public static final String VALIDATION_ERROR_QUANTITY_IS_LESS_THAN_ZERO = "Quantity cannot be less than zero";
 
     public static final String ERROR_CUSTOMER_ARCHIVED = "Customer is archived and cannot be changed";
+    public static final String ERROR_ORDER_STATUS_CANNOT_BE_CHANGED = "Cannot change order %s status from %s to %s";
+    public static final String ERROR_ORDER_DELIVERY_DATE_CANNOT_BE_IN_THE_PAST = "Order %s expected delivery date cannot be in the past";
+    public static final String ERROR_ORDER_CANNOT_BE_PLACED_HAS_NOT_ITEMS = "Order %s cannot be placed, it has no items";
 
 }
