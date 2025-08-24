@@ -162,6 +162,11 @@ public class Order {
         this.recalculateTotals();
     }
 
+    public void cancel() {
+        this.setCanceledAt(OffsetDateTime.now());
+        this.changeStatus(OrderStatus.CANCELED);
+    }
+
     public boolean isDraft() {
         return OrderStatus.DRAFT.equals(this.status());
     }
@@ -176,6 +181,10 @@ public class Order {
 
     public boolean isReady() {
         return OrderStatus.READY.equals(this.status());
+    }
+
+    public boolean isCanceled() {
+        return OrderStatus.CANCELED.equals(this.status());
     }
 
     private OrderItem findOrderItem(OrderItemId orderItemId) {

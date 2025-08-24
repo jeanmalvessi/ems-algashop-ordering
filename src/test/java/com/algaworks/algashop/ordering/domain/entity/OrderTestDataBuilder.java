@@ -34,6 +34,7 @@ public class OrderTestDataBuilder {
 
         switch (this.status) {
             case DRAFT -> {
+                // no events for draft orders (initial status)
             }
             case PLACED -> {
                 order.place();
@@ -48,6 +49,7 @@ public class OrderTestDataBuilder {
                 order.markAsReady();
             }
             case CANCELED -> {
+                order.cancel();
             }
         }
 
