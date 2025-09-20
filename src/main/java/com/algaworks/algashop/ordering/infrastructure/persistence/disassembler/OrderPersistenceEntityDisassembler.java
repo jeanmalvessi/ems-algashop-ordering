@@ -1,20 +1,25 @@
 package com.algaworks.algashop.ordering.infrastructure.persistence.disassembler;
 
 import com.algaworks.algashop.ordering.domain.model.entity.Order;
+import com.algaworks.algashop.ordering.domain.model.entity.OrderItem;
 import com.algaworks.algashop.ordering.domain.model.entity.OrderStatus;
 import com.algaworks.algashop.ordering.domain.model.entity.PaymentMethod;
 import com.algaworks.algashop.ordering.domain.model.valueobject.*;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.OrderId;
+import com.algaworks.algashop.ordering.domain.model.valueobject.id.ProductId;
 import com.algaworks.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 import com.algaworks.algashop.ordering.infrastructure.persistence.embeddable.BillingEmbeddable;
 import com.algaworks.algashop.ordering.infrastructure.persistence.embeddable.RecipientEmbeddable;
 import com.algaworks.algashop.ordering.infrastructure.persistence.embeddable.ShippingEmbeddable;
+import com.algaworks.algashop.ordering.infrastructure.persistence.entity.OrderItemPersistenceEntity;
 import com.algaworks.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderPersistenceEntityDisassembler {
@@ -33,13 +38,15 @@ public class OrderPersistenceEntityDisassembler {
                 .readyAt(persistenceEntity.getReadyAt())
                 .billing(this.buildBilling(persistenceEntity.getBilling()))
                 .shipping(this.buildShipping(persistenceEntity.getShipping()))
-                .items(new HashSet<>())
+                .items(this.buildItems(persistenceEntity.getItems()))
                 .version(persistenceEntity.getVersion())
                 .build();
     }
 
     private Billing buildBilling(BillingEmbeddable billing) {
-        if (Objects.isNull(billing)) return null;
+        if (Objects.isNull(billing)) {
+            return null;
+        }
 
         return Billing.builder()
                 .fullName(new FullName(billing.getFirstName(), billing.getLastName()))
@@ -51,7 +58,9 @@ public class OrderPersistenceEntityDisassembler {
     }
 
     private Shipping buildShipping(ShippingEmbeddable shipping) {
-        if (Objects.isNull(shipping)) return null;
+        if (Objects.isNull(shipping)) {
+            return null;
+        }
 
         return Shipping.builder()
                 .cost(new Money(shipping.getCost()))
@@ -83,5 +92,25 @@ public class OrderPersistenceEntityDisassembler {
                 .document(new Document(recipient.getDocument()))
                 .phone(new Phone(recipient.getPhone()))
                 .build();
+    }
+
+    private Set<OrderItem> buildItems(Set<OrderItemPersistenceEntity> items) {
+        if (Objects.isNull(items)) {
+            return new HashSet<>();
+        }
+
+        return items.stream()
+                .map(orderItemPersistence -> OrderItem.brandNew()
+                        .orderId(new OrderId(orderItemPersistence.getOrderId()))
+                        .product(Product.builder()
+                                .id(new ProductId(orderItemPersistence.getProductId()))
+                                .name(new ProductName(orderItemPersistence.getProductName()))
+                                .price(new Money(orderItemPersistence.getPrice()))
+                                .inStock(true)
+                                .build()
+                        )
+                        .quantity(new Quantity(orderItemPersistence.getQuantity()))
+                        .build())
+                .collect(Collectors.toSet());
     }
 }
