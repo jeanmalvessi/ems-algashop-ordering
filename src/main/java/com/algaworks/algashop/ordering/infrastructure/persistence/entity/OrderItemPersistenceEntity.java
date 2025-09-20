@@ -15,9 +15,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class OrderItemPersistenceEntity {
+
     @Id
     @EqualsAndHashCode.Include
     private Long id;
+
     private UUID productId;
     private String productName;
     private BigDecimal price;
