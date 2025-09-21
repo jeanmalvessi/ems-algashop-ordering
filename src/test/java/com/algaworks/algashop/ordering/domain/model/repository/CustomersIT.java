@@ -2,6 +2,7 @@ package com.algaworks.algashop.ordering.domain.model.repository;
 
 import com.algaworks.algashop.ordering.domain.model.entity.Customer;
 import com.algaworks.algashop.ordering.domain.model.entity.CustomerTestDataBuilder;
+import com.algaworks.algashop.ordering.domain.model.valueobject.Email;
 import com.algaworks.algashop.ordering.domain.model.valueobject.FullName;
 import com.algaworks.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algaworks.algashop.ordering.infrastructure.persistence.assembler.CustomerPersistenceEntityAssembler;
@@ -104,5 +105,25 @@ class CustomersIT {
 
         Assertions.assertThat(customers.exists(customer.id())).isTrue();
         Assertions.assertThat(customers.exists(new CustomerId())).isFalse();
+    }
+
+    @Test
+    void shouldFindByEmail() {
+        Customer customer = CustomerTestDataBuilder.brandNewCustomer().build();
+        customers.add(customer);
+
+        Optional<Customer> customerOptional = customers.ofEmail(customer.email());
+
+        Assertions.assertThat(customerOptional).isPresent();
+    }
+
+    @Test
+    void shouldReturnIfEmailIsInUse() {
+        Customer customer = CustomerTestDataBuilder.brandNewCustomer().build();
+        customers.add(customer);
+
+        Assertions.assertThat(customers.isEmailUnique(customer.email(), customer.id())).isTrue();
+        Assertions.assertThat(customers.isEmailUnique(customer.email(), new CustomerId())).isFalse();
+        Assertions.assertThat(customers.isEmailUnique(new Email("jean@email.com"), new CustomerId())).isTrue();
     }
 }
