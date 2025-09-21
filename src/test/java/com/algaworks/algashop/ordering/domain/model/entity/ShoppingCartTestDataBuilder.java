@@ -6,7 +6,7 @@ import com.algaworks.algashop.ordering.domain.model.valueobject.id.ShoppingCartI
 
 public class ShoppingCartTestDataBuilder {
 
-    public CustomerId customerId = new CustomerId();
+    public CustomerId customerId = CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID;
     public static final ShoppingCartId DEFAULT_SHOPPING_CART_ID = new ShoppingCartId();
     private boolean withItems = true;
 
@@ -22,12 +22,12 @@ public class ShoppingCartTestDataBuilder {
 
         if (withItems) {
             cart.addItem(
-                    ProductTestDataBuilder.aProduct().build(),
-                    new Quantity(2)
+                ProductTestDataBuilder.aProduct().build(),
+                new Quantity(2)
             );
             cart.addItem(
-                    ProductTestDataBuilder.aProductAltRamMemory().build(),
-                    new Quantity(1)
+                ProductTestDataBuilder.aProductAltRamMemory().build(),
+                new Quantity(1)
             );
         }
 
