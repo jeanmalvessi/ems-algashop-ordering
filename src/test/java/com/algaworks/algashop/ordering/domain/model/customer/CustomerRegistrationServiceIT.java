@@ -1,10 +1,12 @@
 package com.algaworks.algashop.ordering.domain.model.customer;
 
 import com.algaworks.algashop.ordering.domain.model.commons.*;
+import com.algaworks.algashop.ordering.domain.model.product.ProductCatalogService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDate;
 
@@ -13,6 +15,9 @@ class CustomerRegistrationServiceIT {
 
     @Autowired
     private CustomerRegistrationService customerRegistrationService;
+
+    @MockitoBean
+    private ProductCatalogService productCatalogService;
 
     @Test
     void shouldRegister() {
