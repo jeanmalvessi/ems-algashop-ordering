@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,14 +75,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         criteriaQuery.select(
             builder.construct(OrderSummaryOutput.class,
                 root.get("id"),
-                builder.construct(CustomerMinimalOutput.class,
-                        customer.get("id"),
-                        customer.get("firstName"),
-                        customer.get("lastName"),
-                        customer.get("email"),
-                        customer.get("document"),
-                        customer.get("phone")
-                ),
                 root.get("totalItems"),
                 root.get("totalAmount"),
                 root.get("placedAt"),
@@ -89,10 +82,23 @@ public class OrderQueryServiceImpl implements OrderQueryService {
                 root.get("canceledAt"),
                 root.get("readyAt"),
                 root.get("status"),
-                root.get("paymentMethod")
+                root.get("paymentMethod"),
+                builder.construct(CustomerMinimalOutput.class,
+                        customer.get("id"),
+                        customer.get("firstName"),
+                        customer.get("lastName"),
+                        customer.get("email"),
+                        customer.get("document"),
+                        customer.get("phone")
+                )
             )
         );
         criteriaQuery.where(predicates);
+
+        Order sortOrder = toSortOrder(builder, root, filter);
+        if (sortOrder != null) {
+            criteriaQuery.orderBy(sortOrder);
+        }
 
         TypedQuery<OrderSummaryOutput> typedQuery = entityManager.createQuery(criteriaQuery);
 
@@ -137,5 +143,15 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         }
 
         return predicates.toArray(new Predicate[]{});
+    }
+
+    private Order toSortOrder(CriteriaBuilder builder, Root<OrderPersistenceEntity> root, OrderFilter filter) {
+        if (filter.getSortDirectionOrDefault() == Sort.Direction.ASC) {
+            return builder.asc(root.get(filter.getSortByPropertyOrDefault().getPropertyName()));
+        }
+        if (filter.getSortDirectionOrDefault() == Sort.Direction.DESC) {
+            return builder.desc(root.get(filter.getSortByPropertyOrDefault().getPropertyName()));
+        }
+        return null;
     }
 }
