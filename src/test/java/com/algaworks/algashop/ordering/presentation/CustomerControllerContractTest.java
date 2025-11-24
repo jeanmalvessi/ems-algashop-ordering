@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 @WebMvcTest(controllers = CustomerController.class)
-class CustomerControllerCT {
+class CustomerControllerContractTest {
 
     @Autowired
     private WebApplicationContext context;
