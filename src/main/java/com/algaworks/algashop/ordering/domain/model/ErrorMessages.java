@@ -19,6 +19,7 @@ public class ErrorMessages {
     public static final String VALIDATION_ERROR_QUANTITY_IS_LESS_THAN_ZERO = "Quantity cannot be less than zero";
 
     public static final String ERROR_CUSTOMER_ARCHIVED = "Customer is archived and cannot be changed";
+    public static final String ERROR_CUSTOMER_NOT_FOUND = "Customer %s was not found";
 
     public static final String ERROR_ORDER_STATUS_CANNOT_BE_CHANGED = "Cannot change order %s status from %s to %s";
     public static final String ERROR_ORDER_DELIVERY_DATE_CANNOT_BE_IN_THE_PAST = "Order %s expected delivery date cannot be in the past";
@@ -30,6 +31,7 @@ public class ErrorMessages {
     public static final String ERROR_ORDER_CANNOT_BE_EDITED = "Order %s with status %s cannot be edited";
 
     public static final String ERROR_PRODUCT_IS_OUT_OF_STOCK = "Product %s is out of stock";
+    public static final String ERROR_PRODUCT_NOT_FOUND = "Product %s was not found";
 
     public static final String ERROR_SHOPPING_CART_DOES_NOT_CONTAIN_ITEM = "Shopping Cart %s does not contain item %s";
     public static final String ERROR_SHOPPING_CART_DOES_NOT_CONTAIN_PRODUCT = "Shopping Cart %s does not contain product %s";
