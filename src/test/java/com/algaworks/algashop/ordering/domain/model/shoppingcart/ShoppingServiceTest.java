@@ -3,7 +3,7 @@ package com.algaworks.algashop.ordering.domain.model.shoppingcart;
 import com.algaworks.algashop.ordering.domain.model.commons.Money;
 import com.algaworks.algashop.ordering.domain.model.commons.Quantity;
 import com.algaworks.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
-import com.algaworks.algashop.ordering.domain.model.customer.CustomerAlreadyHaveShoppingCartException;
+import com.algaworks.algashop.ordering.domain.model.customer.CustomerAlreadyHasShoppingCartException;
 import com.algaworks.algashop.ordering.domain.model.customer.CustomerNotFoundException;
 import com.algaworks.algashop.ordering.domain.model.customer.Customers;
 import com.algaworks.algashop.ordering.domain.model.customer.CustomerId;
@@ -74,7 +74,7 @@ class ShoppingServiceTest {
         when(customers.exists(customerId)).thenReturn(true);
         when(shoppingCarts.ofCustomer(customerId)).thenReturn(Optional.of(existingCart));
 
-        assertThatExceptionOfType(CustomerAlreadyHaveShoppingCartException.class)
+        assertThatExceptionOfType(CustomerAlreadyHasShoppingCartException.class)
                 .isThrownBy(() -> shoppingService.startShopping(customerId));
 
         verify(customers).exists(customerId);

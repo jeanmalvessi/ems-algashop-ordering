@@ -70,7 +70,7 @@ class ShoppingCartManagementApplicationServiceIT {
         ShoppingCart existingCart = ShoppingCart.startShopping(customer.id());
         shoppingCarts.add(existingCart);
 
-        Assertions.assertThatExceptionOfType(CustomerAlreadyHaveShoppingCartException.class)
+        Assertions.assertThatExceptionOfType(CustomerAlreadyHasShoppingCartException.class)
                 .isThrownBy(() -> service.createNew(customer.id().value()));
     }
 

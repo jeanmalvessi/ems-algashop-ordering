@@ -1,6 +1,6 @@
 package com.algaworks.algashop.ordering.domain.model.shoppingcart;
 
-import com.algaworks.algashop.ordering.domain.model.customer.CustomerAlreadyHaveShoppingCartException;
+import com.algaworks.algashop.ordering.domain.model.customer.CustomerAlreadyHasShoppingCartException;
 import com.algaworks.algashop.ordering.domain.model.customer.CustomerNotFoundException;
 import com.algaworks.algashop.ordering.domain.model.customer.Customers;
 import com.algaworks.algashop.ordering.domain.model.DomainService;
@@ -16,12 +16,11 @@ public class ShoppingService {
 
     public ShoppingCart startShopping(CustomerId customerId) {
         if (!customers.exists(customerId)) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException(customerId);
         }
         if (shoppingCarts.ofCustomer(customerId).isPresent()) {
-            throw new CustomerAlreadyHaveShoppingCartException();
+            throw new CustomerAlreadyHasShoppingCartException(customerId);
         }
-
         return ShoppingCart.startShopping(customerId);
     }
 }
