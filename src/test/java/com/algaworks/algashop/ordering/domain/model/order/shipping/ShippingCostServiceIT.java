@@ -25,7 +25,7 @@ class ShippingCostServiceIT {
     private WireMockServer wireMockRapidex;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         wireMockRapidex = new WireMockServer(options()
                 .port(8780)
                 .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
@@ -35,7 +35,7 @@ class ShippingCostServiceIT {
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         wireMockRapidex.stop();
     }
 
