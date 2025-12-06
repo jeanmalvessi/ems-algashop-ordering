@@ -2,12 +2,16 @@ package com.algaworks.algashop.ordering.domain.model.order.shipping;
 
 import com.algaworks.algashop.ordering.domain.model.order.shipping.ShippingCostService.CalculationRequest;
 import com.algaworks.algashop.ordering.domain.model.commons.ZipCode;
-import com.algaworks.algashop.ordering.domain.model.product.ProductCatalogService;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 @SpringBootTest
 class ShippingCostServiceIT {
@@ -18,8 +22,22 @@ class ShippingCostServiceIT {
     @Autowired
     private OriginAddressService originAddressService;
 
-    @MockitoBean
-    private ProductCatalogService productCatalogService;
+    private WireMockServer wireMockRapidex;
+
+    @BeforeEach
+    public void setup() {
+        wireMockRapidex = new WireMockServer(options()
+                .port(8780)
+                .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
+                .extensions(new ResponseTemplateTransformer(true)));
+
+        wireMockRapidex.start();
+    }
+
+    @AfterEach
+    public void after() {
+        wireMockRapidex.stop();
+    }
 
     @Test
     void shouldCalculate() {
