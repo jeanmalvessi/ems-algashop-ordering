@@ -20,6 +20,7 @@ public class ErrorMessages {
 
     public static final String ERROR_CUSTOMER_ARCHIVED = "Customer is archived and cannot be changed";
     public static final String ERROR_CUSTOMER_NOT_FOUND = "Customer %s was not found";
+    public static final String ERROR_CUSTOMER_EMAIL_IS_IN_USE = "Customer email is already in use";
 
     public static final String ERROR_ORDER_STATUS_CANNOT_BE_CHANGED = "Cannot change order %s status from %s to %s";
     public static final String ERROR_ORDER_DELIVERY_DATE_CANNOT_BE_IN_THE_PAST = "Order %s expected delivery date cannot be in the past";
