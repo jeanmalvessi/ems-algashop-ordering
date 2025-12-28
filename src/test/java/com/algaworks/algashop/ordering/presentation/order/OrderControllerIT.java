@@ -49,7 +49,6 @@ class OrderControllerIT {
 
     private static final UUID validCustomerId = UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a");
     private static final UUID validProductId = UUID.fromString("fffe6ec2-7103-48b3-8e4f-3b58e43fb75a");
-    private static final UUID validShoppingCartId = UUID.fromString("4f31582a-66e6-4601-a9d3-ff608c2d4461");
 
     private WireMockServer wireMockProductCatalog;
     private WireMockServer wireMockRapidex;
@@ -189,12 +188,6 @@ class OrderControllerIT {
 
     @Test
     void shouldCreateOrderUsingShoppingCart() {
-        var shoppingCartPersistence = ShoppingCartPersistenceEntityTestDataBuilder.existingShoppingCart()
-                .id(validShoppingCartId)
-                .customer(customerRepository.getReferenceById(validCustomerId))
-                .build();
-        shoppingCartRepository.save(shoppingCartPersistence);
-
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-shopping-cart.json");
 
         OrderDetailOutput orderDetailOutput = RestAssured
