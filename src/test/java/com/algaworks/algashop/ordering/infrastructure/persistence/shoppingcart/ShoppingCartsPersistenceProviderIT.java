@@ -9,12 +9,12 @@ import com.algaworks.algashop.ordering.infrastructure.persistence.customer.Custo
 import com.algaworks.algashop.ordering.infrastructure.persistence.SpringDataAuditingConfig;
 import com.algaworks.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;
 import com.algaworks.algashop.ordering.infrastructure.persistence.customer.CustomersPersistenceProvider;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
         SpringDataAuditingConfig.class
 })
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(properties = "spring.flyway.locations=classpath:db/migration,classpath:db/testdata")
 class ShoppingCartsPersistenceProviderIT {
 
     @Autowired
@@ -42,15 +43,6 @@ class ShoppingCartsPersistenceProviderIT {
 
     @Autowired
     private ShoppingCartPersistenceEntityRepository entityRepository;
-
-    @BeforeEach
-    void setup() {
-        if (!customersPersistenceProvider.exists(CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID)) {
-            customersPersistenceProvider.add(
-                    CustomerTestDataBuilder.existingCustomer().build()
-            );
-        }
-    }
 
     @Test
     void shouldAddAndFindShoppingCart() {
