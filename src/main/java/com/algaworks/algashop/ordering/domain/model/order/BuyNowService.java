@@ -13,14 +13,13 @@ public class BuyNowService {
 
     private final CustomerHasFreeShippingSpecification customerHasFreeShippingSpecification;
 
-    public Order buyNow(Product product, Customer customer, Billing billing,
-                        Shipping shipping, Quantity quantity, PaymentMethod paymentMethod) {
+    public Order buyNow(Product product, Customer customer, Billing billing, Shipping shipping, Quantity quantity, PaymentMethod paymentMethod, CreditCardId creditCardId) {
 
         product.checkOutOfStock();
 
         Order order = Order.draft(customer.id());
         order.changeBilling(billing);
-        order.changePaymentMethod(paymentMethod);
+        order.changePaymentMethod(paymentMethod, creditCardId);
         order.addItem(product, quantity);
 
         if (hasFreeShipping(customer)) {

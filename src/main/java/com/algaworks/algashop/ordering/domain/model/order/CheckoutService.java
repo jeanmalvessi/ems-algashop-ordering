@@ -15,7 +15,7 @@ public class CheckoutService {
 
     private final CustomerHasFreeShippingSpecification hasFreeShippingSpecification;
 
-    public Order checkout(Customer customer, ShoppingCart shoppingCart, Billing billing, Shipping shipping, PaymentMethod paymentMethod) {
+    public Order checkout(Customer customer, ShoppingCart shoppingCart, Billing billing, Shipping shipping, PaymentMethod paymentMethod, CreditCardId creditCardId) {
         if (shoppingCart.isEmpty()) {
             throw new ShoppingCartCantProceedToCheckoutException();
         }
@@ -33,7 +33,7 @@ public class CheckoutService {
             order.changeShipping(shipping);
         }
 
-        order.changePaymentMethod(paymentMethod);
+        order.changePaymentMethod(paymentMethod, creditCardId);
 
         for (ShoppingCartItem item : shoppingCart.items()) {
             order.addItem(new Product(item.productId(), item.name(), item.price(), item.isAvailable()), item.quantity());
