@@ -3,7 +3,7 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.custom
 import com.algaworks.algashop.ordering.core.ports.input.customer.*;
 import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ShoppingCartOutput;
 import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ForQueryingShoppingCarts;
-import com.algaworks.algashop.ordering.presentation.PageModel;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.PageModel;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

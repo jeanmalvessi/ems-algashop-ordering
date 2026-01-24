@@ -10,7 +10,7 @@ import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistenc
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.shoppingcart.ShoppingCartsPersistenceProvider;
 import com.algaworks.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
-import com.algaworks.algashop.ordering.infrastructure.persistence.SpringDataAuditingConfig;
+import com.algaworks.algashop.ordering.infrastructure.config.auditing.SpringDataAuditingConfig;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.customer.CustomerPersistenceEntityDisassembler;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.customer.CustomersPersistenceProvider;

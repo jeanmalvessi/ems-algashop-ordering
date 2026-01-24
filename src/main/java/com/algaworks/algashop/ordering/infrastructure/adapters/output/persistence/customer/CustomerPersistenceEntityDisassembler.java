@@ -10,7 +10,7 @@ import com.algaworks.algashop.ordering.core.domain.model.customer.BirthDate;
 import com.algaworks.algashop.ordering.core.domain.model.customer.Customer;
 import com.algaworks.algashop.ordering.core.domain.model.customer.LoyaltyPoints;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerId;
-import com.algaworks.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddable;
+import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.commons.AddressEmbeddable;
 import org.springframework.stereotype.Component;
 
 @Component

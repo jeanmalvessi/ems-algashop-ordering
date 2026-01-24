@@ -6,7 +6,7 @@ import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ShoppingCar
 import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ForQueryingShoppingCarts;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import com.algaworks.algashop.ordering.core.domain.model.product.ProductNotFoundException;
-import com.algaworks.algashop.ordering.presentation.UnprocessableEntityException;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.UnprocessableEntityException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
