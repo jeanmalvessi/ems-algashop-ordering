@@ -1,17 +1,15 @@
-package com.algaworks.algashop.ordering.infrastructure.persistence.order;
+package com.algaworks.algashop.ordering.core.ports.input.order;
 
-import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
-public class RecipientEmbeddable {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class RecipientData {
     private String firstName;
     private String lastName;
     private String document;

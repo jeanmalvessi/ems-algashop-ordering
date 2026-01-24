@@ -1,24 +1,21 @@
-package com.algaworks.algashop.ordering.core.application.checkout;
+package com.algaworks.algashop.ordering.core.ports.input.order;
 
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
-import com.algaworks.algashop.ordering.core.application.order.query.RecipientData;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ShippingInput {
-    @Valid
-    @NotNull
+public class ShippingData {
+    private BigDecimal cost;
+    private LocalDate expectedDate;
     private RecipientData recipient;
-
-    @Valid
-    @NotNull
     private AddressData address;
 }

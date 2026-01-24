@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.core.ports.output.order;
 
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderId;
 import lombok.AllArgsConstructor;

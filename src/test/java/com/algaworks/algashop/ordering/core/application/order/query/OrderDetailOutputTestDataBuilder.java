@@ -4,6 +4,12 @@ import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderId;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderItemId;
+import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
+import com.algaworks.algashop.ordering.core.ports.input.order.RecipientData;
+import com.algaworks.algashop.ordering.core.ports.input.order.ShippingData;
+import com.algaworks.algashop.ordering.core.ports.output.order.CustomerMinimalOutput;
+import com.algaworks.algashop.ordering.core.ports.output.order.OrderDetailOutput;
+import com.algaworks.algashop.ordering.core.ports.output.order.OrderItemDetailOutput;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,22 +1,16 @@
-package com.algaworks.algashop.ordering.infrastructure.persistence.order;
+package com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.order;
 
-import com.algaworks.algashop.ordering.core.application.order.query.CustomerMinimalOutput;
-import com.algaworks.algashop.ordering.core.application.order.query.OrderDetailOutput;
-import com.algaworks.algashop.ordering.core.application.order.query.OrderFilter;
-import com.algaworks.algashop.ordering.core.application.order.query.OrderQueryService;
-import com.algaworks.algashop.ordering.core.application.order.query.OrderSummaryOutput;
 import com.algaworks.algashop.ordering.core.application.utility.Mapper;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderId;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderNotFoundException;
+import com.algaworks.algashop.ordering.core.ports.input.order.OrderFilter;
+import com.algaworks.algashop.ordering.core.ports.output.order.CustomerMinimalOutput;
+import com.algaworks.algashop.ordering.core.ports.output.order.ForObtainingOrders;
+import com.algaworks.algashop.ordering.core.ports.output.order.OrderDetailOutput;
+import com.algaworks.algashop.ordering.core.ports.output.order.OrderSummaryOutput;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.Order;
-import jakarta.persistence.criteria.Path;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,7 +25,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class OrderQueryServiceImpl implements OrderQueryService {
+public class ForObtainingOrdersJpaRepositoryImpl implements ForObtainingOrders {
 
     private final OrderPersistenceEntityRepository repository;
     private final Mapper mapper;

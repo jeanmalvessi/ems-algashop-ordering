@@ -1,8 +1,10 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
+import com.algaworks.algashop.ordering.core.ports.input.checkout.CheckoutInput;
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
-import com.algaworks.algashop.ordering.core.application.order.query.BillingData;
-import com.algaworks.algashop.ordering.core.application.order.query.RecipientData;
+import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
+import com.algaworks.algashop.ordering.core.ports.input.order.RecipientData;
+import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.core.ports.input.order;
 
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
 import lombok.AllArgsConstructor;
@@ -6,16 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ShippingData {
-    private BigDecimal cost;
-    private LocalDate expectedDate;
-    private RecipientData recipient;
+public class BillingData {
+    private String firstName;
+    private String lastName;
+    private String document;
+    private String email;
+    private String phone;
     private AddressData address;
 }

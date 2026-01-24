@@ -1,5 +1,7 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.core.ports.output.order;
 
+import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
+import com.algaworks.algashop.ordering.core.ports.input.order.ShippingData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

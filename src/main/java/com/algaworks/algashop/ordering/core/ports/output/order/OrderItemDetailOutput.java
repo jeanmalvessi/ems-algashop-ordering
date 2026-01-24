@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.core.ports.output.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

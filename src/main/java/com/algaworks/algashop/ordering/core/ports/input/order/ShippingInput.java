@@ -1,6 +1,8 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.core.ports.input.order;
 
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BillingData {
-    private String firstName;
-    private String lastName;
-    private String document;
-    private String email;
-    private String phone;
+public class ShippingInput {
+    @Valid
+    @NotNull
+    private RecipientData recipient;
+
+    @Valid
+    @NotNull
     private AddressData address;
 }

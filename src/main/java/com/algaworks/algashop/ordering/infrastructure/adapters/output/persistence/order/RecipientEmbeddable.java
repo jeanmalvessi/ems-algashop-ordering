@@ -1,21 +1,19 @@
-package com.algaworks.algashop.ordering.core.application.order.query;
+package com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.order;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
-@Data
-@AllArgsConstructor
+@Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CustomerMinimalOutput {
-    private UUID id;
+@Data
+public class RecipientEmbeddable {
     private String firstName;
     private String lastName;
-    private String email;
     private String document;
     private String phone;
 }

@@ -1,14 +1,9 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
-import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
-import com.algaworks.algashop.ordering.core.application.order.query.BillingData;
-import com.algaworks.algashop.ordering.core.domain.model.commons.Address;
-import com.algaworks.algashop.ordering.core.domain.model.commons.Document;
-import com.algaworks.algashop.ordering.core.domain.model.commons.Email;
-import com.algaworks.algashop.ordering.core.domain.model.commons.FullName;
-import com.algaworks.algashop.ordering.core.domain.model.commons.Phone;
-import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
+import com.algaworks.algashop.ordering.core.domain.model.commons.*;
 import com.algaworks.algashop.ordering.core.domain.model.order.Billing;
+import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
+import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
 import org.springframework.stereotype.Component;
 
 @Component
