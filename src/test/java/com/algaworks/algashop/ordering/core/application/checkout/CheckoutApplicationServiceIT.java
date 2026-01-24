@@ -3,22 +3,16 @@ package com.algaworks.algashop.ordering.core.application.checkout;
 import com.algaworks.algashop.ordering.core.application.AbstractApplicationIT;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Money;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Quantity;
-import com.algaworks.algashop.ordering.core.domain.model.order.CheckoutService;
+import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
+import com.algaworks.algashop.ordering.core.domain.model.customer.Customers;
 import com.algaworks.algashop.ordering.core.domain.model.order.Order;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderId;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderStatus;
 import com.algaworks.algashop.ordering.core.domain.model.order.Orders;
-import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
-import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartCantProceedToCheckoutException;
-import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
-import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartTestDataBuilder;
-import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCarts;
-import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
-import com.algaworks.algashop.ordering.core.domain.model.customer.Customers;
-import com.algaworks.algashop.ordering.core.domain.model.order.shipping.OriginAddressService;
 import com.algaworks.algashop.ordering.core.domain.model.order.shipping.ShippingCostService;
 import com.algaworks.algashop.ordering.core.domain.model.product.Product;
 import com.algaworks.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
+import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.*;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.CheckoutInput;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,12 +39,6 @@ class CheckoutApplicationServiceIT extends AbstractApplicationIT {
 
     @Autowired
     private Customers customers;
-
-    @Autowired
-    private CheckoutService checkoutService;
-
-    @Autowired
-    private OriginAddressService originAddressService;
 
     @MockitoBean
     private ShippingCostService shippingCostService;

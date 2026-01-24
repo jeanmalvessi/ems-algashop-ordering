@@ -1,13 +1,14 @@
 package com.algaworks.algashop.ordering.contract.base;
 
 import com.algaworks.algashop.ordering.core.application.checkout.BuyNowApplicationService;
-import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
 import com.algaworks.algashop.ordering.core.application.checkout.CheckoutApplicationService;
-import com.algaworks.algashop.ordering.core.ports.input.checkout.CheckoutInput;
-import com.algaworks.algashop.ordering.core.application.order.query.*;
-import com.algaworks.algashop.ordering.core.ports.input.order.OrderFilter;
-import com.algaworks.algashop.ordering.core.application.order.query.OrderQueryService;
+import com.algaworks.algashop.ordering.core.application.order.OrderDetailOutputTestDataBuilder;
+import com.algaworks.algashop.ordering.core.application.order.OrderSummaryOutputTestDataBuilder;
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderNotFoundException;
+import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
+import com.algaworks.algashop.ordering.core.ports.input.checkout.CheckoutInput;
+import com.algaworks.algashop.ordering.core.ports.input.order.ForQueryingOrders;
+import com.algaworks.algashop.ordering.core.ports.input.order.OrderFilter;
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.order.OrderController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ public class OrderBase {
     private WebApplicationContext context;
 
     @MockitoBean
-    private OrderQueryService orderQueryService;
+    private ForQueryingOrders forQueryingOrders;
 
     @MockitoBean
     private BuyNowApplicationService buyNowApplicationService;
@@ -38,7 +39,6 @@ public class OrderBase {
     private CheckoutApplicationService checkoutApplicationService;
 
     public static final String validOrderId = "01226N0640J7Q";
-
     public static final String notFoundOrderId = "01226N0693HDH";
 
     @BeforeEach
@@ -57,13 +57,13 @@ public class OrderBase {
         Mockito.when(checkoutApplicationService.checkout(Mockito.any(CheckoutInput.class)))
                 .thenReturn(validOrderId);
 
-        Mockito.when(orderQueryService.findById(validOrderId))
+        Mockito.when(forQueryingOrders.findById(validOrderId))
                 .thenReturn(OrderDetailOutputTestDataBuilder.placedOrder(validOrderId).build());
 
-        Mockito.when(orderQueryService.findById(notFoundOrderId))
+        Mockito.when(forQueryingOrders.findById(notFoundOrderId))
                 .thenThrow(new OrderNotFoundException());
 
-        Mockito.when(orderQueryService.filter(Mockito.any(OrderFilter.class)))
+        Mockito.when(forQueryingOrders.filter(Mockito.any(OrderFilter.class)))
                 .thenReturn(new PageImpl<>(
                         List.of(OrderSummaryOutputTestDataBuilder.placedOrder().id(validOrderId).build())
                 ));
