@@ -38,9 +38,7 @@ public class CustomFrameworkRetryCircuitBreakerHealthIndicator implements Health
                 if (policy.getLastException() != null && policy.getLastException().getCause() != null) {
                     lastException = policy.getLastException().getCause();
                     cbDetails.put("lastException", lastException.getMessage());
-                } /*else {
-                    cbDetails.put("lastException", null);
-                }*/
+                }
             }
 
             details.put(circuitBreaker.getId(), cbDetails);
