@@ -1,10 +1,15 @@
 spring:
+  cache:
+    type: 'redis'
   datasource:
     url: 'jdbc:postgresql://postgres:5432/ordering'
   flyway:
     enabled: true
     locations: 'classpath:db/migration,classpath:db/testdata'
     url: 'jdbc:postgresql://postgres:5432/ordering'
+  data:
+    redis:
+      host: 'redis'
 algashop:
   integrations:
     shipping:
