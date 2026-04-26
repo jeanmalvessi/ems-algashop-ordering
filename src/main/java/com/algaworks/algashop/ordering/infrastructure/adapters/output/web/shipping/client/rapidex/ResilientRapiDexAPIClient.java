@@ -2,6 +2,7 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.output.web.shipp
 
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.BadGatewayException;
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.GatewayTimeoutException;
+import com.algaworks.algashop.ordering.infrastructure.config.resilience.SpringCircuitBreakerConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.circuitbreaker.retry.FrameworkRetryCircuitBreaker;
 import org.springframework.cloud.circuitbreaker.retry.FrameworkRetryConfig;
@@ -27,7 +28,7 @@ public class ResilientRapiDexAPIClient {
 
     public ResilientRapiDexAPIClient(RapiDexAPIClient rapiDexAPIClient,
                                      CircuitBreakerFactory<FrameworkRetryConfig, FrameworkRetryConfigBuilder> circuitBreakerFactory) {
-        this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create("rapidexCB");
+        this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create(SpringCircuitBreakerConfig.RAPIDEX_CB_ID);
         this.rapiDexAPIClient = rapiDexAPIClient;
     }
 

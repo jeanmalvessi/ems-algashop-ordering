@@ -2,6 +2,7 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.output.web.produ
 
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.BadGatewayException;
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.GatewayTimeoutException;
+import com.algaworks.algashop.ordering.infrastructure.config.resilience.SpringCircuitBreakerConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.circuitbreaker.retry.FrameworkRetryCircuitBreaker;
@@ -31,7 +32,7 @@ public class ResilientProductCatalogAPIClient {
     public ResilientProductCatalogAPIClient(ProductCatalogAPIClient productCatalogAPIClient,
                                             CircuitBreakerFactory<FrameworkRetryConfig, FrameworkRetryConfigBuilder> circuitBreakerFactory) {
         this.productCatalogAPIClient = productCatalogAPIClient;
-        this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create("productCatalogCB");
+        this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create(SpringCircuitBreakerConfig.PRODUCT_CATALOG_CB_ID);
     }
 
     @Cacheable(cacheNames = "algashop:product-catalog-api:v1", key = "#productId")
