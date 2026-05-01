@@ -17,4 +17,4 @@ algashop:
     rapidex:
       url: 'http://wiremock:8080'
     product-catalog:
-      url: 'http://wiremock:8080'
+      url: 'http://algashop-product-catalog:8083'
