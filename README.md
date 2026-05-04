@@ -27,9 +27,14 @@ Built using a **purist DDD** approach with Hexagonal Architecture (Ports & Adapt
 - **Flyway** (database migrations)
 - **Spring Cache** + Redis (server-side caching — Cache-Aside and Write-Through patterns)
 - **Spring REST Client** (integration with `product-catalog` and RapiDex shipping)
+- **Spring Cloud Circuit Breaker** (resilience and retries)
+- **Spring Boot Actuator** (monitoring and health checks)
 - **Spring Cloud Contract 5.0.0** (consumer-driven contract testing)
 - **Testcontainers** (PostgreSQL integration tests)
 - **WireMock** (mocks for external service calls in tests)
+- **Hypersistence TSID** (type-safe identifiers)
+- **ModelMapper** (entity/DTO mapping)
+- **Commons Validator** (input validation)
 - **Lombok**
 
 ## API
