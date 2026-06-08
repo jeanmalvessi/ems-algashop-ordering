@@ -13,6 +13,7 @@ import com.algaworks.algashop.ordering.core.ports.output.order.OrderDetailOutput
 import com.algaworks.algashop.ordering.core.ports.output.order.OrderSummaryOutput;
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.PageModel;
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.exception.UnprocessableEntityException;
+import com.algaworks.algashop.ordering.infrastructure.config.security.SecurityAnnotations.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,17 +29,20 @@ public class OrderController {
     private final ForBuyingProducts forBuyingProducts;
 
     @GetMapping("/{orderId}")
+    @CanReadOrders
     public OrderDetailOutput findById(@PathVariable String orderId) {
         return forQueryingOrders.findById(orderId);
     }
 
     @GetMapping
+    @CanReadOrders
     public PageModel<OrderSummaryOutput> filter(OrderFilter filter) {
         return PageModel.of(forQueryingOrders.filter(filter));
     }
 
     @PostMapping(consumes = "application/vnd.order-with-product.v1+json")
     @ResponseStatus(HttpStatus.CREATED)
+    @CanWriteOrders
     public OrderDetailOutput createWithProduct(@Valid @RequestBody BuyNowInput input) {
         String orderId;
         try {
@@ -51,6 +55,7 @@ public class OrderController {
 
     @PostMapping(consumes = "application/vnd.order-with-shopping-cart.v1+json")
     @ResponseStatus(HttpStatus.CREATED)
+    @CanWriteOrders
     public OrderDetailOutput createWithShoppingCart(@Valid @RequestBody CheckoutInput input) {
         String orderId;
         try {
