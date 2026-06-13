@@ -80,7 +80,7 @@ public class ResilientProductCatalogAPIClient {
     }
 
     private RuntimeException translateException(RestClientException e) {
-        if (e.getCause() instanceof SocketTimeoutException  || e.getCause() instanceof ResourceAccessException) {
+        if (e.getCause() instanceof SocketTimeoutException  || e instanceof ResourceAccessException) {
             return new GatewayTimeoutException("Product Catalog API Timeout", e);
         }
         if (e instanceof HttpClientErrorException) {

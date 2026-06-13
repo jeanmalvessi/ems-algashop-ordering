@@ -7,7 +7,6 @@ import com.algaworks.algashop.ordering.core.ports.output.order.OrderDetailOutput
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.order.OrderPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
@@ -47,8 +46,7 @@ class OrderControllerIT extends AbstractWebIT {
     void shouldCreateOrderUsingProduct() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product.json");
 
-        String createdOrderId = RestAssured
-            .given()
+        String createdOrderId = givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(json)
@@ -76,8 +74,7 @@ class OrderControllerIT extends AbstractWebIT {
                 .creditCardId(creditCardId)
                 .build();
 
-        OrderDetailOutput orderDetailOutput = RestAssured
-            .given()
+        OrderDetailOutput orderDetailOutput = givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(input)
@@ -103,8 +100,7 @@ class OrderControllerIT extends AbstractWebIT {
     void shouldNotCreateOrderUsingProductWhenProductNotExists() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-invalid-product.json");
 
-        RestAssured
-            .given()
+        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(json)
@@ -120,8 +116,7 @@ class OrderControllerIT extends AbstractWebIT {
     @Test
     void shouldNotCreateOrderUsingProductWhenCustomerWasNotFound() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product-and-invalid-customer.json");
-        RestAssured
-            .given()
+        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(json)
@@ -137,8 +132,7 @@ class OrderControllerIT extends AbstractWebIT {
     void shouldCreateOrderUsingShoppingCart() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-shopping-cart.json");
 
-        OrderDetailOutput orderDetailOutput = RestAssured
-            .given()
+        OrderDetailOutput orderDetailOutput = givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-shopping-cart.v1+json")
                 .body(json)

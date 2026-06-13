@@ -2,14 +2,17 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.order;
 
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 
+@TestPropertySource(properties = {
+    "algashop.integrations.product-catalog.url=http://localhost:9999"
+})
 class OrderControllerWithoutProductCatalogIT extends AbstractWebIT {
 
     @BeforeEach
@@ -31,10 +34,7 @@ class OrderControllerWithoutProductCatalogIT extends AbstractWebIT {
     void shouldNotCreateOrderUsingProductWhenProductAPIIsUnavailable() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product.json");
 
-        wireMockProductCatalog.stop();
-
-        RestAssured
-            .given()
+        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(json)

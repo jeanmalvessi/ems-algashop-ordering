@@ -3,7 +3,6 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.shoppi
 import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
@@ -42,8 +41,7 @@ class ShoppingCartControllerIT extends AbstractWebIT {
     void shouldCreateShoppingCart() {
         String json = AlgaShopResourceUtils.readContent("json/create-shopping-cart.json");
 
-        UUID createdShoppingCart = RestAssured
-            .given()
+        UUID createdShoppingCart = givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(json)
@@ -64,8 +62,7 @@ class ShoppingCartControllerIT extends AbstractWebIT {
     void shouldAddProductToShoppingCart() {
         String json = AlgaShopResourceUtils.readContent("json/add-product-to-shopping-cart.json");
 
-        RestAssured
-            .given()
+        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(json)
