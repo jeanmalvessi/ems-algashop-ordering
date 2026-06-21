@@ -1,6 +1,5 @@
 spring:
   cache:
-    #type: 'none'
     type: 'redis'
   datasource:
     url: 'jdbc:postgresql://localhost:5432/ordering'
@@ -25,12 +24,27 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: 'http://authorization-server:8081'
+          issuer-uri: ${algashop.integrations.authorization-server.url}
+      client:
+        provider:
+          algashop-as:
+            # issuer-uri: 'http://authorization-server:8081'
+            token-uri: ${algashop.integrations.authorization-server.url}/oauth2/token
+        registration:
+          algashop-ordering-service-client:
+            provider: 'algashop-as'
+            client-id: 'algashop-ordering-service'
+            client-secret: 'secret123'
+            authorization-grant-type: 'client_credentials'
+            client-authentication-method: 'client_secret_basic'
+            scope: 'products:read'
 algashop:
   integrations:
+    authorization-server.url: 'http://authorization-server:8081'
     shipping:
       provider: 'RAPIDEX'
     rapidex:
       url: 'http://localhost:8787'
     product-catalog:
       url: 'http://localhost:8083'
+      oauth2-client-registration-id: 'algashop-ordering-service-client'

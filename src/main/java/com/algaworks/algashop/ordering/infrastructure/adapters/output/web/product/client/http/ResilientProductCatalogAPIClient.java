@@ -35,8 +35,8 @@ public class ResilientProductCatalogAPIClient {
         this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create(SpringCircuitBreakerConfig.PRODUCT_CATALOG_CB_ID);
     }
 
-    @Cacheable(cacheNames = "algashop:product-catalog-api:v1", key = "#productId")
-    @ConcurrencyLimit(2)
+    @Cacheable(cacheNames = "algashop:product-catalog-api:v1", key = "#productId", unless="#result == null")
+    @ConcurrencyLimit(10)
     /*@Retryable(
         maxRetries = 3,
         delayString = "3s",
@@ -69,10 +69,7 @@ public class ResilientProductCatalogAPIClient {
         log.info("Loading product {}", productId);
         try {
             return Optional.ofNullable(productCatalogAPIClient.getById(productId));
-        } catch (HttpClientErrorException e) {
-            if (!(e instanceof HttpClientErrorException.NotFound)) {
-                log.error("Client HTTP error when loading product {}", productId, e);
-            }
+        } catch (HttpClientErrorException.NotFound e) {
             return Optional.empty();
         } catch (RestClientException e) {
             throw translateException(e);
