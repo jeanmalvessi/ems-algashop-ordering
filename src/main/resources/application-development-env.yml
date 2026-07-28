@@ -28,7 +28,7 @@ spring:
       client:
         provider:
           algashop-as:
-            # issuer-uri: 'http://authorization-server:8081'
+            # issuer-uri: 'http://auth.algashop.local:8081'
             token-uri: ${algashop.integrations.authorization-server.url}/oauth2/token
         registration:
           algashop-ordering-service-client:
@@ -40,7 +40,7 @@ spring:
             scope: 'products:read'
 algashop:
   integrations:
-    authorization-server.url: 'http://authorization-server:8081'
+    authorization-server.url: 'http://auth.algashop.local:8081'
     shipping:
       provider: 'RAPIDEX'
     rapidex:
