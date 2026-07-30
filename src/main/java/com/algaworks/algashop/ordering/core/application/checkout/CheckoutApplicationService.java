@@ -1,5 +1,6 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
+import com.algaworks.algashop.ordering.core.application.security.SecurityCheckApplicationService;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
 import com.algaworks.algashop.ordering.core.domain.model.customer.Customer;
@@ -16,11 +17,14 @@ import com.algaworks.algashop.ordering.core.domain.model.shoppingcart.ShoppingCa
 import com.algaworks.algashop.ordering.core.ports.input.checkout.CheckoutInput;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.ForBuyingWithShoppingCart;
 import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +41,8 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
     private final ShippingCostService shippingCostService;
     private final OriginAddressService originAddressService;
     private final ProductCatalogService productCatalogService;
+
+    private final SecurityCheckApplicationService securityCheck;
 
     @Transactional
     @Override
@@ -55,6 +61,8 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
 
         ShoppingCartId shoppingCartId = new ShoppingCartId(input.getShoppingCartId());
         ShoppingCart shoppingCart = shoppingCarts.ofId(shoppingCartId).orElseThrow(ShoppingCartNotFoundException::new);
+
+        verifyCanOrderFor(shoppingCart.customerId().value());
 
         Customer customer = customers.ofId(shoppingCart.customerId()).orElseThrow(CustomerNotFoundException::new);
 
@@ -79,5 +87,11 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
         ZipCode origin = originAddressService.originAddress().zipCode();
         ZipCode destination = new ZipCode(shipping.getAddress().getZipCode());
         return shippingCostService.calculate(new ShippingCostService.CalculationRequest(origin, destination));
+    }
+
+    private void verifyCanOrderFor(@NotNull UUID customerId) {
+        if (!(securityCheck.isCustomer() && securityCheck.getAuthenticatedUserId().equals(customerId))) {
+            throw new AccessDeniedException("Cannot order for customer " + customerId);
+        }
     }
 }

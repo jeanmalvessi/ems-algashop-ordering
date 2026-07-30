@@ -1,5 +1,6 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
+import com.algaworks.algashop.ordering.core.application.security.SecurityCheckApplicationService;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Quantity;
 import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
@@ -23,11 +24,14 @@ import com.algaworks.algashop.ordering.core.domain.model.product.ProductNotFound
 import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.ForBuyingProducts;
 import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +49,14 @@ public class BuyNowApplicationService implements ForBuyingProducts {
     private final ShippingInputDisassembler shippingInputDisassembler;
     private final BillingInputDisassembler billingInputDisassembler;
 
+    private final SecurityCheckApplicationService securityCheck;
+
     @Transactional
     @Override
     public String buyNow(BuyNowInput input) {
         Objects.requireNonNull(input);
+
+        verifyCanOrderFor(input.getCustomerId());
 
         PaymentMethod paymentMethod = PaymentMethod.valueOf(input.getPaymentMethod());
         CustomerId customerId = new CustomerId(input.getCustomerId());
@@ -86,5 +94,11 @@ public class BuyNowApplicationService implements ForBuyingProducts {
         ZipCode origin = originAddressService.originAddress().zipCode();
         ZipCode destination = new ZipCode(shipping.getAddress().getZipCode());
         return shippingCostService.calculate(new ShippingCostService.CalculationRequest(origin, destination));
+    }
+
+    private void verifyCanOrderFor(@NotNull UUID customerId) {
+        if (!(securityCheck.isCustomer() && securityCheck.getAuthenticatedUserId().equals(customerId))) {
+            throw new AccessDeniedException("Cannot order for customer " + customerId);
+        }
     }
 }
