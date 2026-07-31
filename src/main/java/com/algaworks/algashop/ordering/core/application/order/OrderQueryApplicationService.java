@@ -1,6 +1,6 @@
 package com.algaworks.algashop.ordering.core.application.order;
 
-import com.algaworks.algashop.ordering.core.application.security.SecurityCheckApplicationService;
+import com.algaworks.algashop.ordering.core.application.security.SecurityChecks;
 import com.algaworks.algashop.ordering.core.ports.input.order.ForQueryingOrders;
 import com.algaworks.algashop.ordering.core.ports.input.order.OrderFilter;
 import com.algaworks.algashop.ordering.core.ports.output.order.ForObtainingOrders;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class OrderQueryApplicationService implements ForQueryingOrders {
 
     private final ForObtainingOrders forObtainingOrders;
-    private final SecurityCheckApplicationService securityCheck;
+    private final SecurityChecks securityCheck;
 
     public OrderDetailOutput findById(String id) {
         OrderDetailOutput order = forObtainingOrders.findById(id);
