@@ -57,7 +57,7 @@ class CustomerControllerContractTest {
 
         UUID customerId = UUID.randomUUID();
 
-        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+        Mockito.when(customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), Mockito.any(CustomerInput.class)))
                 .thenReturn(customerId);
 
         Mockito.when(forQueryingCustomers.findById(Mockito.any(UUID.class)))
@@ -282,7 +282,7 @@ class CustomerControllerContractTest {
 
     @Test
     void createCustomerError409Contract() {
-        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+        Mockito.when(customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), Mockito.any(CustomerInput.class)))
                 .thenThrow(CustomerEmailIsInUseException.class);
 
         String jsonInput = """
@@ -326,7 +326,7 @@ class CustomerControllerContractTest {
 
     @Test
     void createCustomerError422Contract() {
-        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+        Mockito.when(customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), Mockito.any(CustomerInput.class)))
                 .thenThrow(DomainException.class);
 
         String jsonInput = """
@@ -370,7 +370,7 @@ class CustomerControllerContractTest {
 
     @Test
     void createCustomerError500Contract() {
-        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+        Mockito.when(customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), Mockito.any(CustomerInput.class)))
                 .thenThrow(RuntimeException.class);
 
         String jsonInput = """

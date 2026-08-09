@@ -21,7 +21,7 @@ class CustomerRegistrationServiceIT extends AbstractDomainIT {
     @Test
     void shouldRegister() {
         Customer customer = customerRegistrationService.register(
-                new FullName("John", "Doe"),
+                new CustomerId(customerAuthenticatedUserId), new FullName("John", "Doe"),
                 new BirthDate(LocalDate.of(1991, 7, 5)),
                 new Email("johndoe@email.com"),
                 new Phone("478-256-2604"),

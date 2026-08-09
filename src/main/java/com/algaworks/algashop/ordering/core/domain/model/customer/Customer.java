@@ -31,9 +31,13 @@ public class Customer extends AbstractEventSourceEntity implements AggregateRoot
     private Long version;
 
     @Builder(builderClassName = "BrandNewCustomerBuilder", builderMethodName = "brandNew")
-    private static Customer createBrandNew(FullName fullName, BirthDate birthDate, Email email, Phone phone, Document document, Boolean promotionNotificationsAllowed, Address address) {
+    private static Customer createBrandNew(CustomerId customerId, FullName fullName, BirthDate birthDate, Email email, Phone phone, Document document, Boolean promotionNotificationsAllowed, Address address) {
+        if (customerId == null) {
+            customerId = new CustomerId();
+        }
+
         Customer customer = new Customer(
-                new CustomerId(),
+                customerId,
                 null,
                 fullName,
                 birthDate,

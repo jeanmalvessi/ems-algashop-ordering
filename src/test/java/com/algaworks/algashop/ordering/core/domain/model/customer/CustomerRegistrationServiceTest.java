@@ -6,11 +6,6 @@ import com.algaworks.algashop.ordering.core.domain.model.commons.Email;
 import com.algaworks.algashop.ordering.core.domain.model.commons.FullName;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Phone;
 import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
-import com.algaworks.algashop.ordering.core.domain.model.customer.BirthDate;
-import com.algaworks.algashop.ordering.core.domain.model.customer.Customer;
-import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerId;
-import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerRegistrationService;
-import com.algaworks.algashop.ordering.core.domain.model.customer.Customers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +31,7 @@ class CustomerRegistrationServiceTest {
                 .thenReturn(true);
 
         Customer customer = customerRegistrationService.register(
-                new FullName("John", "Doe"),
+                new CustomerId(customerAuthenticatedUserId), new FullName("John", "Doe"),
                 new BirthDate(LocalDate.of(1991, 7, 5)),
                 new Email("johndoe@email.com"),
                 new Phone("478-256-2604"),
