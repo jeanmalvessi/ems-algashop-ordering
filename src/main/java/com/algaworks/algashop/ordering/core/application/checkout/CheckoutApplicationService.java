@@ -4,6 +4,7 @@ import com.algaworks.algashop.ordering.core.application.security.SecurityChecks;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
 import com.algaworks.algashop.ordering.core.domain.model.customer.Customer;
+import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import com.algaworks.algashop.ordering.core.domain.model.customer.Customers;
 import com.algaworks.algashop.ordering.core.domain.model.order.*;
@@ -48,10 +49,12 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
     @Override
     public String checkout(CheckoutInput input) {
         Objects.requireNonNull(input);
+
         PaymentMethod paymentMethod = PaymentMethod.valueOf(input.getPaymentMethod());
+        CustomerId customerId = new CustomerId(input.getCustomerId());
+        Customer customer = customers.ofId(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
 
         CreditCardId creditCardId = null;
-
         if (paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
             if (input.getCreditCardId() == null) {
                 throw new DomainException("Credit card id is required");
@@ -59,12 +62,10 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
             creditCardId = new CreditCardId(input.getCreditCardId());
         }
 
-        ShoppingCartId shoppingCartId = new ShoppingCartId(input.getShoppingCartId());
-        ShoppingCart shoppingCart = shoppingCarts.ofId(shoppingCartId).orElseThrow(ShoppingCartNotFoundException::new);
+        ShoppingCart shoppingCart = shoppingCarts.ofCustomer(customerId)
+                .orElseThrow(() -> ShoppingCartNotFoundException.ofCustomer(customerId.value()));
 
         verifyCanOrderFor(shoppingCart.customerId().value());
-
-        Customer customer = customers.ofId(shoppingCart.customerId()).orElseThrow(CustomerNotFoundException::new);
 
         var shippingCalculationResult = calculateShippingCost(input.getShipping());
 

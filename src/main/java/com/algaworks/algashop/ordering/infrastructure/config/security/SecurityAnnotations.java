@@ -11,7 +11,7 @@ public class SecurityAnnotations {
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
-    @PreAuthorize("hasAuthority('SCOPE_orders:read')")
+    @PreAuthorize("hasAuthority('SCOPE_orders:read') and not hasRole('CUSTOMER')")
     public @interface CanReadOrders {}
 
     @Target({ElementType.METHOD, ElementType.TYPE})
@@ -42,12 +42,20 @@ public class SecurityAnnotations {
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAuthority('SCOPE_customers:write') and hasRole('CUSTOMER')")
-    public @interface CanWriteMyCustomerProfile {
-    }
+    public @interface CanWriteMyCustomerProfile {}
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAuthority('SCOPE_customers:read') and hasRole('CUSTOMER')")
-    public @interface CanReadMyCustomerProfile {
-    }
+    public @interface CanReadMyCustomerProfile {}
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize("hasAuthority('SCOPE_orders:write') and hasRole('CUSTOMER')")
+    public @interface CanWriteMyOrders {}
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize("hasAuthority('SCOPE_orders:read') and hasRole('CUSTOMER')")
+    public @interface CanReadMyOrders {}
 }
