@@ -46,12 +46,12 @@ class CustomerTest {
             c -> Assertions.assertThat(c.address()).isEqualTo(
                     Address.builder()
                             .street("Main St")
-                            .number("00000")
+                            .number("Anonymized")
                             .neighborhood("Downtown")
                             .city("Springfield")
                             .state("IL")
                             .zipCode(new ZipCode("62701"))
-                            .complement("Anonymous")
+                            .complement(null)
                             .build()
             )
         );

@@ -39,7 +39,7 @@ class OrderControllerWithoutProductCatalogIT extends AbstractWebIT {
                 .contentType("application/vnd.order-with-product.v1+json")
                 .body(json)
             .when()
-                .post("/api/v1/orders")
+                .post("/api/v1/customers/me/orders")
             .then()
                 .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
