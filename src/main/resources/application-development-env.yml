@@ -66,6 +66,7 @@ spring:
         spring.json.type.mapping:
           ProductCatalog.ProductDelistedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductDelistedIntegrationEvent,
           ProductCatalog.ProductListedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductListedIntegrationEvent
+          ProductCatalog.ProductAddedIntegrationEvent:tools.jackson.databind.node.ObjectNode
 algashop:
   integrations:
     shipping.provider: ${ordering.params.integrations.shipping-provider}
