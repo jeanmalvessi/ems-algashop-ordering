@@ -57,8 +57,8 @@ public class ShoppingCartItem {
         this.recalculateTotals();
     }
 
-    private void recalculateTotals() {
-        this.setTotalAmount(price.multiply(quantity));
+    void changeAvailability(boolean available) {
+        this.setAvailable(available);
     }
 
     public ShoppingCartItemId id() {
@@ -91,6 +91,10 @@ public class ShoppingCartItem {
 
     public Money totalAmount() {
         return totalAmount;
+    }
+
+    private void recalculateTotals() {
+        this.setTotalAmount(price.multiply(quantity));
     }
 
     private void setId(ShoppingCartItemId id) {
