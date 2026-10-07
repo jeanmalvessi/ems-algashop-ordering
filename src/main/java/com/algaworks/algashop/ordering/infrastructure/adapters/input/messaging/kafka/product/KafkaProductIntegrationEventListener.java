@@ -3,6 +3,7 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.input.messaging.
 import com.algaworks.algashop.ordering.core.application.product.event.ProductDelistedIntegrationEvent;
 import com.algaworks.algashop.ordering.core.application.product.event.ProductListedIntegrationEvent;
 import com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedIntegrationEvent;
+import com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedV2IntegrationEvent;
 import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ForManagingShoppingCarts;
 import com.algaworks.algashop.ordering.infrastructure.config.cache.ProductCacheManager;
 import lombok.RequiredArgsConstructor;
@@ -48,12 +49,21 @@ public class KafkaProductIntegrationEventListener {
         forManagingShoppingCarts.changeProductAvailability(event.getProductId(), false);
     }
 
-    @KafkaHandler
+    /*@KafkaHandler
     public void handle(@Payload ProductPriceChangedIntegrationEvent event,
                        @Header(value = KafkaHeaders.RECEIVED_KEY) String messageKey) {
         log.info("Received " + event.getClass());
         log.info("MessageKey " + messageKey);
         productCacheManager.evict(event.getProductId());
         forManagingShoppingCarts.refreshProductPrice(event.getProductId());
+    }*/
+
+    @KafkaHandler
+    public void handle(@Payload ProductPriceChangedV2IntegrationEvent event,
+                       @Header(value = KafkaHeaders.RECEIVED_KEY) String messageKey) {
+        log.info("Received " + event.getClass());
+        log.info("MessageKey " + messageKey);
+        productCacheManager.evict(event.getProductId());
+        forManagingShoppingCarts.refreshProductPrice(event.getProductId(), event.getNewSalePrice());
     }
 }
