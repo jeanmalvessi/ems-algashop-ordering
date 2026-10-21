@@ -59,6 +59,9 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       group-id: ordering
       properties:
+        max.poll.interval.ms: 300000 # 5 minutos - tempo máximo entre duas chamadas de poll() — estourou, o consumer é considerado em falha e sai do grupo
+        max.poll.records: 500 # quantos registros uma única chamada de poll() devolve
+        heartbeat.interval.ms: 3000 # 3 segundos - de quanto em quanto tempo envia pulsos para dizer que o consumidor está vivo
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
         spring.json.trusted.packages: com.algaworks.algashop.*
         spring.json.key.default.type: java.lang.String
