@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@KafkaListener(topics = {"#{algaShopMessagingKafkaProperties.productEventTopicName}"})
+@KafkaListener(topics = {"#{algaShopMessagingKafkaProperties.productEventTopicName}"}/*, errorHandler = "defaultErrorHandler"*/)
 @RequiredArgsConstructor
 public class KafkaProductIntegrationEventListener {
 
@@ -27,8 +27,8 @@ public class KafkaProductIntegrationEventListener {
 
     @KafkaHandler(isDefault = true)
     public void handle(@Payload Object event,
-                       @Header(value = KafkaHeaders.RECEIVED_KEY) String messageKey,
-                       @Header(value = KafkaHeaders.OFFSET) String messageOffset) {
+                       @Header(value = KafkaHeaders.RECEIVED_KEY, required = false) String messageKey,
+                       @Header(value = KafkaHeaders.OFFSET, required = false) String messageOffset) {
         log.info("Event ignored: key={} offset={} event={}", messageKey, messageOffset, event.toString());
     }
 
