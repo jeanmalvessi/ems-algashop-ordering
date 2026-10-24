@@ -5,6 +5,7 @@ import com.algaworks.algashop.ordering.core.application.product.event.ProductLis
 import com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedV2IntegrationEvent;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.ports.input.shoppingcart.ForManagingShoppingCarts;
+import com.algaworks.algashop.ordering.core.ports.output.idempotency.ForGuardingIdempotency;
 import com.algaworks.algashop.ordering.infrastructure.config.cache.ProductCacheManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,9 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -32,6 +35,7 @@ public class KafkaProductIntegrationEventListener {
 
     private final ForManagingShoppingCarts forManagingShoppingCarts;
     private final ProductCacheManager productCacheManager;
+    private final ForGuardingIdempotency forGuardingIdempotency;
 
     @Value("${simulate:none}") // none | slow | technical | business
     private String simulate;
@@ -71,13 +75,23 @@ public class KafkaProductIntegrationEventListener {
     public void handle(@Payload @Valid ProductPriceChangedV2IntegrationEvent event,
                        @Header(value = KafkaHeaders.RECEIVED_KEY, required = false) String messageKey,
                        @Header(value = KafkaHeaders.RECEIVED_PARTITION, required = false) Integer partition,
-                       @Header(value = KafkaHeaders.OFFSET, required = false) Integer offset) {
+                       @Header(value = KafkaHeaders.OFFSET, required = false) Integer offset,
+                       @Header(value = "idempotency-key") byte[] rawIdempotencyKey) {
         logReceived(event, messageKey, partition, offset);
 
-        simulateProcessing();
+        UUID idempotencyKey = UUID.fromString(new String(rawIdempotencyKey, StandardCharsets.UTF_8));
 
-        productCacheManager.evict(event.getProductId());
-        forManagingShoppingCarts.refreshProductPrice(event.getProductId(), event.getNewSalePrice());
+        boolean processed = forGuardingIdempotency.runOnce(idempotencyKey, () -> {
+            productCacheManager.evict(event.getProductId()); //Redis não tem rollback
+            forManagingShoppingCarts.refreshProductPrice(event.getProductId(), event.getNewSalePrice()); //rollback
+            simulateProcessing();
+        });
+
+        if (!processed) {
+            return;
+        }
+
+        log.warn("Mail sent on shopping cart update.");
     }
 
     private void simulateProcessing() {
@@ -85,7 +99,7 @@ public class KafkaProductIntegrationEventListener {
             case "slow" -> {
                 log.warn("Simulated slow call");
                 try {
-                    Thread.sleep(Duration.ofSeconds(30));
+                    Thread.sleep(Duration.ofSeconds(90));
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
