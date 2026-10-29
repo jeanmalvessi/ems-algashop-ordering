@@ -56,4 +56,13 @@ public class KafkaConfig {
                 ))
                 .build();
     }
+
+    @Bean
+    public NewTopic ordersEventTopic(AlgaShopMessagingKafkaProperties properties) {
+        return TopicBuilder.name(DLT_PREFIX + properties.getOrderEventTopicName())
+                .partitions(3) //same quantity as the source topic
+                .replicas(3)
+                .configs(Map.of("min.insync.replicas", "2"))
+                .build();
+    }
 }
