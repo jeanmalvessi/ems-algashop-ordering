@@ -1,6 +1,7 @@
-package com.algaworks.algashop.ordering.core.ports.input.order;
+package com.algaworks.algashop.ordering.core.ports.input.checkout;
 
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
+import com.algaworks.algashop.ordering.core.ports.input.order.RecipientData;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

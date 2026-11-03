@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.checkout;
+package com.algaworks.algashop.ordering.core.application.order;
 
 import com.algaworks.algashop.ordering.core.domain.model.commons.*;
 import com.algaworks.algashop.ordering.core.domain.model.order.Billing;
@@ -7,7 +7,7 @@ import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
 import org.springframework.stereotype.Component;
 
 @Component
-class BillingInputDisassembler {
+public class BillingInputDisassembler {
 
     public Billing toDomainModel(BillingData billingData) {
         AddressData address = billingData.getAddress();

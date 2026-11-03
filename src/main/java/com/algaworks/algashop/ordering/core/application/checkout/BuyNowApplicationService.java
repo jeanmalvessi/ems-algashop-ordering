@@ -1,5 +1,7 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
+import com.algaworks.algashop.ordering.core.application.order.BillingInputDisassembler;
+import com.algaworks.algashop.ordering.core.application.order.ShippingInputDisassembler;
 import com.algaworks.algashop.ordering.core.application.security.SecurityChecks;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Quantity;
@@ -23,7 +25,7 @@ import com.algaworks.algashop.ordering.core.domain.model.product.ProductId;
 import com.algaworks.algashop.ordering.core.domain.model.product.ProductNotFoundException;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.ForBuyingProducts;
-import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
+import com.algaworks.algashop.ordering.core.ports.input.checkout.ShippingInput;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -81,24 +83,22 @@ public class BuyNowApplicationService implements ForBuyingProducts {
 
         Billing billing = billingInputDisassembler.toDomainModel(input.getBilling());
 
-        Order order = buyNowService.buyNow(
-            product, customer, billing, shipping, quantity, paymentMethod, creditCardId
-        );
+        Order order = buyNowService.buyNow(product, customer, billing, shipping, quantity, paymentMethod, creditCardId);
 
         orders.add(order);
 
         return order.id().toString();
     }
 
-    private ShippingCostService.CalculationResult calculateShippingCost(ShippingInput shipping) {
-        ZipCode origin = originAddressService.originAddress().zipCode();
-        ZipCode destination = new ZipCode(shipping.getAddress().getZipCode());
-        return shippingCostService.calculate(new ShippingCostService.CalculationRequest(origin, destination));
-    }
-
     private void verifyCanOrderFor(@NotNull UUID customerId) {
         if (!securityCheck.canOrderFor(customerId)) {
             throw new AccessDeniedException("Cannot order for customer " + customerId);
         }
+    }
+
+    private ShippingCostService.CalculationResult calculateShippingCost(ShippingInput shipping) {
+        ZipCode origin = originAddressService.originAddress().zipCode();
+        ZipCode destination = new ZipCode(shipping.getAddress().getZipCode());
+        return shippingCostService.calculate(new ShippingCostService.CalculationRequest(origin, destination));
     }
 }

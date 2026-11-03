@@ -59,8 +59,9 @@ spring:
         ProductCatalog.ProductDelistedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductDelistedIntegrationEvent,
         ProductCatalog.ProductListedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductListedIntegrationEvent,
         ProductCatalog.ProductPriceChangedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedIntegrationEvent,
-        ProductCatalog.ProductPriceChangedV2IntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedV2IntegrationEvent
-        Ordering.OrderPlacedIntegrationEvent:com.algaworks.algashop.ordering.core.application.order.event.OrderPlacedIntegrationEvent
+        ProductCatalog.ProductPriceChangedV2IntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedV2IntegrationEvent,
+        Ordering.OrderPlacedIntegrationEvent:com.algaworks.algashop.ordering.core.application.order.event.OrderPlacedIntegrationEvent,
+        Ordering.CheckoutAcceptedIntegrationEvent:com.algaworks.algashop.ordering.core.application.order.event.CheckoutAcceptedIntegrationEvent
         #ProductCatalog.ProductAddedIntegrationEvent:tools.jackson.databind.node.ObjectNode # Generic Type - replaced with class KafkaConsumerTypeIdIdentifier
     producer:
       acks: all

@@ -6,7 +6,7 @@ import com.algaworks.algashop.ordering.core.ports.input.order.BillingData;
 import com.algaworks.algashop.ordering.core.ports.input.order.RecipientData;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algaworks.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
-import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
+import com.algaworks.algashop.ordering.core.ports.input.checkout.ShippingInput;
 
 import java.util.UUID;
 

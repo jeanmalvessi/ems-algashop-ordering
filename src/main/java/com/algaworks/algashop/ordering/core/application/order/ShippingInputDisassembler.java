@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.checkout;
+package com.algaworks.algashop.ordering.core.application.order;
 
 import com.algaworks.algashop.ordering.core.ports.input.commons.AddressData;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Address;
@@ -9,11 +9,11 @@ import com.algaworks.algashop.ordering.core.domain.model.commons.ZipCode;
 import com.algaworks.algashop.ordering.core.domain.model.order.Recipient;
 import com.algaworks.algashop.ordering.core.domain.model.order.Shipping;
 import com.algaworks.algashop.ordering.core.domain.model.order.shipping.ShippingCostService;
-import com.algaworks.algashop.ordering.core.ports.input.order.ShippingInput;
+import com.algaworks.algashop.ordering.core.ports.input.checkout.ShippingInput;
 import org.springframework.stereotype.Component;
 
 @Component
-class ShippingInputDisassembler {
+public class ShippingInputDisassembler {
 
     public Shipping toDomainModel(ShippingInput shippingInput, ShippingCostService.CalculationResult shippingCalculationResult) {
         AddressData address = shippingInput.getAddress();
