@@ -3,6 +3,7 @@ package com.algaworks.algashop.ordering.infrastructure.config.kafka;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.TopicPartition;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
@@ -47,12 +48,21 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic productEventsDlt(AlgaShopMessagingKafkaProperties properties) {
-        return TopicBuilder.name(DLT_PREFIX + properties.getProductEventTopicName())
+        return createDeadLetterTopic(properties.getProductEventTopicName());
+    }
+
+    @Bean
+    public NewTopic orderEventsDlt(AlgaShopMessagingKafkaProperties properties) {
+        return createDeadLetterTopic(properties.getOrderEventTopicName());
+    }
+
+    private static @NonNull NewTopic createDeadLetterTopic(String originTopicName) {
+        return TopicBuilder.name(DLT_PREFIX + originTopicName)
                 .partitions(3) //same quantity as the source topic
                 .replicas(3)
                 .configs(Map.of(
-                        "min.insync.replicas", "2",
-                        "retention.ms", String.valueOf(Duration.ofDays(30).toMillis())
+                    "min.insync.replicas", "2",
+                    "retention.ms", String.valueOf(Duration.ofDays(30).toMillis())
                 ))
                 .build();
     }
