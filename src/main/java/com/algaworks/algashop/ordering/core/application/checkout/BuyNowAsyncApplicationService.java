@@ -1,10 +1,10 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
+import com.algaworks.algashop.ordering.core.application.checkout.command.OrderSnapshot;
+import com.algaworks.algashop.ordering.core.application.checkout.command.OrderSnapshotAssembler;
+import com.algaworks.algashop.ordering.core.application.checkout.command.ProcessAcceptedCheckoutIntegrationCommand;
 import com.algaworks.algashop.ordering.core.application.order.BillingInputDisassembler;
 import com.algaworks.algashop.ordering.core.application.order.ShippingInputDisassembler;
-import com.algaworks.algashop.ordering.core.application.order.event.CheckoutAcceptedIntegrationEvent;
-import com.algaworks.algashop.ordering.core.application.order.event.OrderSnapshot;
-import com.algaworks.algashop.ordering.core.application.order.event.OrderSnapshotAssembler;
 import com.algaworks.algashop.ordering.core.application.security.SecurityChecks;
 import com.algaworks.algashop.ordering.core.domain.model.DomainException;
 import com.algaworks.algashop.ordering.core.domain.model.commons.Quantity;
@@ -13,7 +13,12 @@ import com.algaworks.algashop.ordering.core.domain.model.customer.Customer;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algaworks.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import com.algaworks.algashop.ordering.core.domain.model.customer.Customers;
-import com.algaworks.algashop.ordering.core.domain.model.order.*;
+import com.algaworks.algashop.ordering.core.domain.model.order.Billing;
+import com.algaworks.algashop.ordering.core.domain.model.order.BuyNowService;
+import com.algaworks.algashop.ordering.core.domain.model.order.CreditCardId;
+import com.algaworks.algashop.ordering.core.domain.model.order.Order;
+import com.algaworks.algashop.ordering.core.domain.model.order.PaymentMethod;
+import com.algaworks.algashop.ordering.core.domain.model.order.Shipping;
 import com.algaworks.algashop.ordering.core.domain.model.order.shipping.OriginAddressService;
 import com.algaworks.algashop.ordering.core.domain.model.order.shipping.ShippingCostService;
 import com.algaworks.algashop.ordering.core.domain.model.product.Product;
@@ -23,7 +28,7 @@ import com.algaworks.algashop.ordering.core.domain.model.product.ProductNotFound
 import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.ForBuyingProductAsync;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.ShippingInput;
-import com.algaworks.algashop.ordering.core.ports.output.order.ForPublishingOrderIntegrationEvents;
+import com.algaworks.algashop.ordering.core.ports.output.order.ForPublishingOrderIntegrationCommands;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -51,7 +56,7 @@ public class BuyNowAsyncApplicationService implements ForBuyingProductAsync {
     private final SecurityChecks securityCheck;
 
     private final OrderSnapshotAssembler orderSnapshotAssembler;
-    private final ForPublishingOrderIntegrationEvents forPublishingOrderIntegrationEvents;
+    private final ForPublishingOrderIntegrationCommands forPublishingOrderIntegrationCommands;
 
     @Transactional
     @Override
@@ -87,8 +92,8 @@ public class BuyNowAsyncApplicationService implements ForBuyingProductAsync {
 
         OrderSnapshot snapshot = orderSnapshotAssembler.toSnapshot(order);
 
-        CheckoutAcceptedIntegrationEvent integrationEvent = new CheckoutAcceptedIntegrationEvent(snapshot);
-        forPublishingOrderIntegrationEvents.send(integrationEvent);
+        ProcessAcceptedCheckoutIntegrationCommand integrationCommand = new ProcessAcceptedCheckoutIntegrationCommand(snapshot);
+        forPublishingOrderIntegrationCommands.send(integrationCommand);
 
         return order.id().toString();
     }

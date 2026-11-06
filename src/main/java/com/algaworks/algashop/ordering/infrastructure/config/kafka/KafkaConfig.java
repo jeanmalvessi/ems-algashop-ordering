@@ -31,6 +31,7 @@ public class KafkaConfig {
         
         DefaultErrorHandler defaultErrorHandler = new DefaultErrorHandler(recoverer, exponentialBackOff);
         defaultErrorHandler.addNotRetryableExceptions(DomainException.class);
+        defaultErrorHandler.addNotRetryableExceptions(IllegalArgumentException.class);
         
         return defaultErrorHandler;
     }
@@ -56,6 +57,11 @@ public class KafkaConfig {
         return createDeadLetterTopic(properties.getOrderEventTopicName());
     }
 
+    @Bean
+    public NewTopic orderCommandsDlt(AlgaShopMessagingKafkaProperties properties) {
+        return createDeadLetterTopic(properties.getOrderCommandTopicName());
+    }
+
     private static @NonNull NewTopic createDeadLetterTopic(String originTopicName) {
         return TopicBuilder.name(DLT_PREFIX + originTopicName)
                 .partitions(3) //same quantity as the source topic
@@ -70,6 +76,15 @@ public class KafkaConfig {
     @Bean
     public NewTopic ordersEventTopic(AlgaShopMessagingKafkaProperties properties) {
         return TopicBuilder.name(DLT_PREFIX + properties.getOrderEventTopicName())
+                .partitions(3) //same quantity as the source topic
+                .replicas(3)
+                .configs(Map.of("min.insync.replicas", "2"))
+                .build();
+    }
+
+    @Bean
+    public NewTopic ordersCommandTopic(AlgaShopMessagingKafkaProperties properties) {
+        return TopicBuilder.name(DLT_PREFIX + properties.getOrderCommandTopicName())
                 .partitions(3) //same quantity as the source topic
                 .replicas(3)
                 .configs(Map.of("min.insync.replicas", "2"))

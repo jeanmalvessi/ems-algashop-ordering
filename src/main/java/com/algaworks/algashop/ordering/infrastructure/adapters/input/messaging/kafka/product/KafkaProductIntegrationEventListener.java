@@ -26,7 +26,6 @@ import java.util.UUID;
 @Slf4j
 @KafkaListener(
     id = "ordering.product-events",
-    idIsGroup = false,
     concurrency = "3", // 3 threads for parallel consumption
     topics = {"#{algaShopMessagingKafkaProperties.productEventTopicName}"}
 )
