@@ -1,9 +1,15 @@
 package com.algaworks.algashop.ordering.infrastructure.adapters.output.messaging.outbox;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
+import java.time.Duration;
+
+@Validated
 @Component
 @Data
 @ConfigurationProperties("algashop.messaging.outbox")
@@ -12,6 +18,15 @@ public class OutboxProperties {
     private boolean enabled = false;
 
     private Dispatcher dispatcher = new Dispatcher();
+
+    @NotNull
+    private Duration sendTimeout;
+
+    @Min(1)
+    private int batchSize;
+
+    @NotNull
+    private Duration pollInterval;
 
     @Data
     public static class Dispatcher {
