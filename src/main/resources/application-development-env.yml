@@ -105,6 +105,7 @@ algashop:
       poll-interval: PT1M #PT5S
       max-attempts: 10
       backoff: PT5S
+      batch-deadline: PT3M
       dispatcher:
         enabled: true
 eureka:

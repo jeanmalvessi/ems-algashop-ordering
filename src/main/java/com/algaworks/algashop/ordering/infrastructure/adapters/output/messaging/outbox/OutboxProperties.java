@@ -34,6 +34,9 @@ public class OutboxProperties {
     @NotNull
     private Duration backoff;
 
+    @NotNull
+    private Duration batchDeadline;
+
     @Data
     public static class Dispatcher {
         private boolean enabled = false;

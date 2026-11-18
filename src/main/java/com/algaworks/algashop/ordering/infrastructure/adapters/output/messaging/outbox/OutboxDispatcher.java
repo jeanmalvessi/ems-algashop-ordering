@@ -26,9 +26,15 @@ public class OutboxDispatcher {
     @Scheduled(fixedDelayString = "${algashop.messaging.outbox.poll-interval}")
     @SchedulerLock(name = "outboxDispatcher", lockAtMostFor = "PT5M")
     public void dispatch() {
+        OffsetDateTime deadLine = OffsetDateTime.now().plus(properties.getBatchDeadline());
+        
         List<OutboxMessage> batch = repository.findBatch(PageRequest.of(0, properties.getBatchSize()));
 
         for (OutboxMessage message : batch) {
+            if (OffsetDateTime.now().isAfter(deadLine)) {
+                log.warn("Outbox batch deadline reached");
+                break;
+            }
             if (!isEligible(message)) {
                 continue;
             }
