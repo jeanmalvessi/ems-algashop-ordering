@@ -1,7 +1,7 @@
 package com.algaworks.algashop.ordering.core.application.checkout;
 
-import com.algaworks.algashop.ordering.core.application.checkout.command.OrderSnapshot;
-import com.algaworks.algashop.ordering.core.application.checkout.command.OrderSnapshotAssembler;
+import com.algaworks.algashop.ordering.core.application.order.snapshot.OrderSnapshot;
+import com.algaworks.algashop.ordering.core.application.order.snapshot.OrderSnapshotAssembler;
 import com.algaworks.algashop.ordering.core.application.checkout.command.ProcessAcceptedCheckoutIntegrationCommand;
 import com.algaworks.algashop.ordering.core.application.order.BillingInputDisassembler;
 import com.algaworks.algashop.ordering.core.application.order.ShippingInputDisassembler;

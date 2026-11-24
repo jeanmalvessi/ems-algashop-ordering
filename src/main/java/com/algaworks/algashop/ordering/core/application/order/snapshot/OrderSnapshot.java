@@ -1,4 +1,4 @@
-package com.algaworks.algashop.ordering.core.application.checkout.command;
+package com.algaworks.algashop.ordering.core.application.order.snapshot;
 
 import com.algaworks.algashop.ordering.core.domain.model.order.OrderStatus;
 
@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Deprecated
 public record OrderSnapshot(
         String orderId,
         UUID customerId,
