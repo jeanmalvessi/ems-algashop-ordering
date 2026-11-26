@@ -4,7 +4,7 @@ import com.algaworks.algashop.ordering.core.domain.model.order.OrderId;
 import com.algaworks.algashop.ordering.core.application.checkout.BuyNowInputTestDataBuilder;
 import com.algaworks.algashop.ordering.core.ports.input.checkout.BuyNowInput;
 import com.algaworks.algashop.ordering.core.ports.output.order.OrderDetailOutput;
-import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractPresentationIT;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.order.OrderPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
 import org.assertj.core.api.Assertions;
@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
-class OrderControllerIT extends AbstractWebIT {
+class OrderControllerIT extends AbstractPresentationIT {
 
     @Autowired
     private OrderPersistenceEntityRepository orderRepository;

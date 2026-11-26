@@ -2,6 +2,7 @@ package com.algaworks.algashop.ordering.infrastructure.adapters.output.persisten
 
 import com.algaworks.algashop.ordering.core.application.security.SecurityChecks;
 import com.algaworks.algashop.ordering.infrastructure.config.auditing.SpringDataAuditingConfig;
+import com.algaworks.algashop.ordering.utils.CacheTestConfig;
 import com.algaworks.algashop.ordering.utils.TestcontainerPostgreSQLConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({TestcontainerPostgreSQLConfig.class, SpringDataAuditingConfig.class})
+@Import({TestcontainerPostgreSQLConfig.class, SpringDataAuditingConfig.class, CacheTestConfig.class})
 @ExtendWith(MockitoExtension.class)
 public abstract class AbstractPersistenceIT {
 

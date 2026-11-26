@@ -1,6 +1,7 @@
 package com.algaworks.algashop.ordering.core.domain.model.product;
 
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.web.product.client.http.ProductCatalogAPIClient;
+import com.algaworks.algashop.ordering.utils.CacheTestConfig;
 import com.algaworks.algashop.ordering.utils.MockJwtDecoderConfig;
 import com.algaworks.algashop.ordering.utils.TestcontainerPostgreSQLConfig;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@Import({ TestcontainerPostgreSQLConfig.class, MockJwtDecoderConfig.class })
+@Import({ TestcontainerPostgreSQLConfig.class, MockJwtDecoderConfig.class, CacheTestConfig.class })
 class ProductCatalogServiceIT {
 
     @Autowired

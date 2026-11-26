@@ -1,6 +1,6 @@
 package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.order;
 
-import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractPresentationIT;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(properties = {
     "algashop.integrations.product-catalog.url=http://localhost:9999"
 })
-class OrderControllerWithoutProductCatalogIT extends AbstractWebIT {
+class OrderControllerWithoutProductCatalogIT extends AbstractPresentationIT {
 
     @BeforeEach
     void setup() {
@@ -43,6 +43,6 @@ class OrderControllerWithoutProductCatalogIT extends AbstractWebIT {
             .then()
                 .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.GATEWAY_TIMEOUT.value());
+                    .statusCode(HttpStatus.BAD_GATEWAY.value());
     }
 }

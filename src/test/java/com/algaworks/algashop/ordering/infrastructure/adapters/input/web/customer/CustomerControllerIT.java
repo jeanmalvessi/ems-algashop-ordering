@@ -1,6 +1,6 @@
 package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.customer;
 
-import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractPresentationIT;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
 import com.algaworks.algashop.ordering.utils.MockJwtFactory;
@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
-class CustomerControllerIT extends AbstractWebIT {
+class CustomerControllerIT extends AbstractPresentationIT {
 
     @Autowired
     private CustomerPersistenceEntityRepository customerRepository;

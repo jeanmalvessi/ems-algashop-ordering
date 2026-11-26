@@ -1,6 +1,6 @@
 package com.algaworks.algashop.ordering.infrastructure.adapters.input.web.shoppingcart;
 
-import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractWebIT;
+import com.algaworks.algashop.ordering.infrastructure.adapters.input.web.AbstractPresentationIT;
 import com.algaworks.algashop.ordering.infrastructure.adapters.output.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algaworks.algashop.ordering.utils.AlgaShopResourceUtils;
 import org.assertj.core.api.Assertions;
@@ -17,7 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.UUID;
 
 @Sql(scripts = "classpath:db/testdata/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class ShoppingCartControllerIT extends AbstractWebIT {
+class ShoppingCartControllerIT extends AbstractPresentationIT {
 
     @Autowired
     private ShoppingCartPersistenceEntityRepository shoppingCartRepository;
