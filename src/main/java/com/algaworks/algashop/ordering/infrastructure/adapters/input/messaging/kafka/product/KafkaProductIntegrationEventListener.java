@@ -26,8 +26,8 @@ import java.util.UUID;
 @Component
 @Slf4j
 @KafkaListener(
-    id = "ordering.product-events",
-    concurrency = "3", // 3 threads for parallel consumption
+    id = "#{algaShopMessagingKafkaProperties.productEventsConsumerGroup}",
+    concurrency = "3",
     topics = {"#{algaShopMessagingKafkaProperties.productEventTopicName}"}
 )
 @RequiredArgsConstructor

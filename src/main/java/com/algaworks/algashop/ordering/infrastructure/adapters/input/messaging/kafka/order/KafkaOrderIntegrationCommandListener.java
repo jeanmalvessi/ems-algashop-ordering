@@ -19,8 +19,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @KafkaListener(
-    id = "ordering.order-commands",
-    //idIsGroup = true (default), //groupId = "ordering.order-commands",
+    id = "#{algaShopMessagingKafkaProperties.orderCommandsConsumerGroup}",
     topics = "#{algaShopMessagingKafkaProperties.orderCommandTopicName}"
 )
 public class KafkaOrderIntegrationCommandListener {
@@ -48,8 +47,7 @@ public class KafkaOrderIntegrationCommandListener {
                        @Header(value = KafkaHeaders.OFFSET, required = false) Integer offset) {
 
         log.warn("OrderIntegrationCommand ignored | key={} | partiton={} | offset={} | thread={}",
-                messageKey, partition, offset,
-                Thread.currentThread().getName());
+                messageKey, partition, offset, Thread.currentThread().getName());
         
         throw new IllegalArgumentException("Unsupported order command");
     }
