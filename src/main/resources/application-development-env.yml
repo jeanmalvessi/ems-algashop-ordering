@@ -56,13 +56,15 @@ spring:
     bootstrap-servers: algashop-kafka-1:9092,algashop-kafka-2:9093,algashop-kafka-3:9094
     properties:
       spring.json.type.mapping:
+        #ProductCatalog.ProductAddedIntegrationEvent:tools.jackson.databind.node.ObjectNode # Generic Type - replaced with class KafkaConsumerTypeIdIdentifier
         ProductCatalog.ProductDelistedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductDelistedIntegrationEvent,
         ProductCatalog.ProductListedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductListedIntegrationEvent,
         ProductCatalog.ProductPriceChangedIntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedIntegrationEvent,
         ProductCatalog.ProductPriceChangedV2IntegrationEvent:com.algaworks.algashop.ordering.core.application.product.event.ProductPriceChangedV2IntegrationEvent,
         Ordering.OrderPlacedIntegrationEvent:com.algaworks.algashop.ordering.core.application.order.event.OrderPlacedIntegrationEvent,
-        Ordering.ProcessAcceptedCheckoutIntegrationCommand:com.algaworks.algashop.ordering.core.application.checkout.command.ProcessAcceptedCheckoutIntegrationCommand
-        #ProductCatalog.ProductAddedIntegrationEvent:tools.jackson.databind.node.ObjectNode # Generic Type - replaced with class KafkaConsumerTypeIdIdentifier
+        Ordering.OrderPaidIntegrationEvent:com.algaworks.algashop.ordering.core.application.order.event.OrderPaidIntegrationEvent,
+        Ordering.ProcessAcceptedCheckoutIntegrationCommand:com.algaworks.algashop.ordering.core.application.checkout.command.ProcessAcceptedCheckoutIntegrationCommand,
+        Billing.InvoicePaidIntegrationEvent:com.algaworks.algashop.ordering.core.application.invoice.event.InvoicePaidIntegrationEvent
     producer:
       acks: all
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
